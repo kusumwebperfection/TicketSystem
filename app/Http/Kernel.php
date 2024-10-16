@@ -69,4 +69,9 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
+
+    protected $commands = [
+        \App\Console\Commands\GenerateRoleHelper::class,
+    ];
+    
 }
