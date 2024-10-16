@@ -7,7 +7,7 @@
       </ol>
       <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
     </nav>
-    @include('components.LanguageSwitcher')
+
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
       <div class="ms-md-auto pe-md-3 d-flex align-items-center">
 
