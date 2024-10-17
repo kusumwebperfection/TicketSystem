@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {            
             $table->id();
            // $table->unsignedBigInteger('user_id');
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('citation_number');
-            $table->string('license_plate_number');
-            $table->string('total_amount_owed');
-            $table->string('ticket_pic');
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->string('citation_number')->nullable();
+            $table->string('license_plate_number')->nullable();
+            $table->string('total_amount_owed')->nullable();
+            $table->float('Price')->nullable();
+            $table->string('ticket_pic')->nullable();
             $table->timestamps();
         });
     }

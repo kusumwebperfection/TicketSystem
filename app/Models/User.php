@@ -21,13 +21,18 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
 
     public function isAdmin() {
         return $this->role === 'admin';
     }
-
+    
+    public function getRolesArray()
+    {
+        return explode(',', $this->roles); // Convert comma-separated string to array
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

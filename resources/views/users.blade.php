@@ -1,13 +1,14 @@
 @extends('admin/adminMaster')
-
+@section('title', 'Users')
+@section('breadcrumbs')
+<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+    <li class="breadcrumb-item text-sm"><a href="{{ url('/') }}">Home</a></li>
+    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Users</li>
+</ol>
+@endsection
 @section('content')
 <div class="container">
-    <h1 class="text-white">Admin Dashboard</h1>
-
-    <!-- Success Messages -->
-    @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    <h1 class="text-white">Users</h1>
 
     @if(\App\Helpers\RoleHelper::hasRole('admin'))
     <div class="row" bis_skin_checked="1">
@@ -25,11 +26,11 @@
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-4">
-                        <table class="table align-items-center mb-0" id="userTable">
+                        <table class="table align-items-center text-center mb-0" id="userTable">
                             <thead class="text-center">
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-md font-weight-bolder">ID</th>
-                                    <th class="text-uppercase text-secondary text-md font-weight-bolder  ps-2">Name</th>
+                                    <th class="text-center text-uppercase text-secondary text-md font-weight-bolder">ID</th>
+                                    <th class="text-center text-uppercase text-secondary text-md font-weight-bolder  ps-2">Name</th>
                                     <th class="text-center text-uppercase text-secondary text-md font-weight-bolder">Email</th>
                                     <th class="text-center text-uppercase text-secondary text-md font-weight-bolder">Role</th>
                                     @if(\App\Helpers\RoleHelper::hasRole('admin'))
@@ -40,34 +41,41 @@
                             <tbody class="text-center">
                                 @foreach($users as $index => $user)
                                 <tr>
-                                    <td>
+                                    <td class="align-middle text-center">
                                         <p class="text-xs font-weight-bold mb-0">{{ $loop->iteration }}</p>
                                     </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{ $user->name }}</p>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->name ?? 'N/A' }}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $user->email ?? 'N/A' }}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ ucfirst($user->role) }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ ucfirst($user->role ?? 'N/A') }}</span>
                                     </td>
+
                                     @if(\App\Helpers\RoleHelper::hasRole('admin'))
                                     <td class="align-middle">
-                                    <a class="btn btn-link text-dark px-3 mb-0 edit-btn" href="javascript:;" data-id="{{ $user->id }}" ><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                        <a class="btn btn-link text-success px-3 mb-0 edit-btn"
+                                            href="javascript:;"
+                                            data-id="{{ $user->id }}">
+                                            <i class="fas fa-pencil-alt text-success me-2" aria-hidden="true"></i>Edit
+                                        </a>
+
                                         <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-link text-danger px-3 mb-0" 
-                                                        onclick="return confirm('Are you sure?')" 
-                                                        style="border: none; background: none;">
-                                                    <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete
-                                                </button>
-                                            </form>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-link text-danger px-3 mb-0"
+                                                onclick="return confirm('Are you sure?')"
+                                                style="border: none; background: none;">
+                                                <i class="far fa-trash-alt me-2" aria-hidden="true"></i>Delete
+                                            </button>
+                                        </form>
                                     </td>
                                     @endif
                                 </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -158,4 +166,17 @@
     </div>
 </div>
 
+@if (session('success'))
+    <script>
+        Toastify({
+            text: "{{ session('success') }}",
+            duration: 3000, // Duration in milliseconds
+            gravity: "top", // `top` or `bottom`
+            position: 'right', // `left`, `center` or `right`
+            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", // Background color
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            onClick: function() {} // Callback after click
+        }).showToast();
+    </script>
+@endif
 @endsection

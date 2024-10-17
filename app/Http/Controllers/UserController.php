@@ -30,8 +30,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
-
-        return redirect()->back()->with('success', 'User created successfully!');
+        return response()->json(['success' => 'User created successfully!']);
+       // return redirect()->back()->with('success', 'User created successfully!');
     }
 
     public function edit(User $user)
@@ -48,13 +48,14 @@ class UserController extends Controller
         ]);
 
         $user->update($request->only('name', 'email', 'role'));
-
-        return redirect()->back()->with('success', 'User updated successfully!');
+        return response()->json(['success' => 'User updated successfully!']);
+       // return redirect()->back()->with('success', 'User updated successfully!');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->back()->with('success', 'User deleted successfully!');
+      return redirect()->back()->with('success', 'User deleted successfully!');
+       // return response()->json(['success' => 'User deleted successfully!']);
     }
 }

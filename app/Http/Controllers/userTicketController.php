@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Ticket;
 class userTicketController extends Controller
 {
     /**
@@ -11,7 +11,8 @@ class userTicketController extends Controller
      */
     public function index()
     {
-        return view('ticket.index');
+        $Ticket = Ticket::paginate(10);
+        return view('ticket.index',compact('Ticket'));
     }
 
     /**
@@ -29,10 +30,10 @@ class userTicketController extends Controller
     {   $rules = [
         'firstname' => 'required|string|min:4|max:255',
         'lastname' => 'required|string|min:4|max:255',
-        'citation-number' => 'required|string|min:4|max:255',
-        'license-plate-number' => 'required|string|min:4|max:255',
-        'total-amount-owed' => 'required|string|min:4|max:255',
-        'ticket-pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',        
+        'citation_number' => 'required|string|min:4|max:255',
+        'license_plate_number' => 'required|string|min:4|max:255',
+        'total_amount_owed' => 'required|string|min:4|max:255',
+        'ticket_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',        
         ];
 
         $messages = [
@@ -41,7 +42,19 @@ class userTicketController extends Controller
         ];
 
         $request->validate($rules, $messages);
-            
+        
+        $ticket = new Ticket();
+        $ticket->firstname = $request->firstname;
+        $ticket->lastname = $request->lastname;
+        $ticket->citation_number = $request->citation_number;
+        $ticket->license_plate_number = $request->license_plate_number;
+        $ticket->total_amount_owed = $request->total_amount_owed;
+        if ($request->hasFile('ticket_pic')) {
+            $ticket->ticket_pic = $request->file('ticket_pic')->store('uploads', 'public');
+        }       
+        $ticket->save();
+        session()->flash('success', 'Ticket created successfully.');
+        return redirect()->back();
     }
 
     /**
@@ -55,9 +68,9 @@ class userTicketController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Ticket $ticket)
     {
-        //
+        return response()->json($ticket);
     }
 
     /**
@@ -65,14 +78,53 @@ class userTicketController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Find the ticket by ID
+        $ticket = Ticket::findOrFail($id);
+    
+        // Validation rules
+        $rules = [
+            'firstname' => 'required|string|min:4|max:255',
+            'lastname' => 'required|string|min:4|max:255',
+            'citation_number' => 'required|string|min:4|max:255',
+            'license_plate_number' => 'required|string|min:4|max:255',
+            'total_amount_owed' => 'required|string|min:1|max:255',
+            'ticket_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
+    
+        $messages = [
+            'firstname.required' => 'Please provide the first name.',
+            'firstname.min' => 'The first name must be at least 4 characters long.',
+        ];
+    
+        // Validate the request data
+        $request->validate($rules, $messages);
+    
+        // Update the ticket fields
+        $ticket->firstname = $request->firstname;
+        $ticket->lastname = $request->lastname;
+        $ticket->citation_number = $request->citation_number;
+        $ticket->license_plate_number = $request->license_plate_number;
+        $ticket->total_amount_owed = $request->total_amount_owed;
+        $ticket->Price = $request->price;
+    
+     if ($request->hasFile('ticket_pic')) {
+            $ticket->ticket_pic = $request->file('ticket_pic')->store('uploads', 'public');
+        }      
+   
+        $ticket->save();
+        return response()->json(['success' => 'Ticket updated successfully.']);
+        // // Flash success message and redirect
+        // session()->flash('success', 'Ticket updated successfully.');
+        // return redirect()->back();
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return redirect()->back()->with('success', 'Ticket deleted successfully!');
     }
 }
