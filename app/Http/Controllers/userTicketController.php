@@ -127,4 +127,48 @@ class userTicketController extends Controller
         $ticket->delete();
         return redirect()->back()->with('success', 'Ticket deleted successfully!');
     }
+
+    public function search(Request $request)
+    {
+        print_r($request);
+        // Validate the incoming request
+        $request->validate([
+            'citation_number' => 'nullable|string',
+            'first_name' => 'nullable|string',
+            'last_name' => 'nullable|string',
+            'license_plate' => 'nullable|string',
+        ]);
+         
+    
+        // Fetch inputs
+        $citationNumber = $request->input('citation_number');
+        $firstName = $request->input('first_name');
+        $lastName = $request->input('last_name');
+        $licensePlate = $request->input('license_plate');
+
+        // Build the query
+        $query = Ticket::query(); // Assuming Ticket is your model
+
+        if ($citationNumber) {
+            $query->where('citation_number', $citationNumber);
+        }
+
+        if ($firstName && $lastName) {
+            $query->where('firstname', $firstName)
+                  ->where('lastname', $lastName);
+        }
+
+        if ($licensePlate) {
+            $query->where('license_plate_number', $licensePlate);
+        }
+
+        // Execute the query
+        $tickets = $query->get();
+
+        // Return JSON response
+        return response()->json([
+            'tickets' => $tickets,
+            'message' => $tickets->isEmpty() ? 'No tickets found.' : 'Tickets retrieved successfully.'
+        ]);
+    }
 }

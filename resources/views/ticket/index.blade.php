@@ -73,7 +73,7 @@
                                             width="100px" height="100px">
                                     </td>
 
-                                    @if(\App\Helpers\RoleHelper::hasRole('admin'))
+                                    @if(\App\Helpers\RoleHelper::hasRole('admin') || \App\Helpers\RoleHelper::hasRole('sub_admin'))
                                     <td class="align-middle">
                                         <a class="btn btn-link text-success px-3 mb-0 ticket-edit-btn"
                                             href="javascript:;"

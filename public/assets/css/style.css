@@ -1,0 +1,110 @@
+.nav .nav-item button.active {
+    background-color: #c42227 !important;
+    color:#fff !important;
+    border-radius: 20px 20px 0 0;
+    width: 100px;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0px 2px 10px 0px rgba(32, 48, 60, 0.29);
+    padding: 18px 0 17px;
+  }
+  .tab-pane h2{
+    color: #c42227;
+    font-size: 38px;
+    font-weight: 300;
+  }
+  .nav-pills{padding-top: 120px;}
+
+  .nav-pills .nav-link {
+    background: #343434!important;
+    width: 80px;
+    padding: 18px 0 17px;
+    margin: 0 auto 1px;
+    color: #fff !important;
+    border-radius: 0;
+}
+.nav-pills li:last-child .nav-link{
+    border-radius: 0 0 20px 20px;
+}
+.ortext{font-size: large;padding: 15px 5px 20px;}
+.form-control {
+    padding: 15px !important;
+    max-width: 400px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-color: #a0a0a0;
+}
+.form-control:focus{border-color:#000 !important;box-shadow: none !important;}
+.buttons button{
+    width: 140px;
+    background-color: #FFFFFF;
+    color: #adadad;
+    padding: 15px 0;
+    border: 2px solid #d4d4d4;
+    border-radius: 30px;
+    margin-right: 40px;
+}
+.buttons button:hover{
+    background-color: #f7f7f7;
+    color: #a5a5a5;
+}
+.button-next{
+    background-color: #c42227;
+    color: #fff;
+    padding: 0 60px;
+    border-radius: 30px;
+}
+.finish-payment{
+    background-color: #c42227!important;
+    color: #fff;
+    padding: 15px 60px;
+    border-radius: 30px;
+}
+.button-next button, .button-next button:hover{color:#fff;}
+.info-left h2{
+    color: #83bde6;
+    font-weight: 300;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.info-left h3, .info-right h3, #payment_receipt h3, #cardholder_info h3{
+    color: #c42227;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.info-left tr td{font-weight: 700;}
+select{display: block;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 8px;}
+    .payment-hsty, .next{margin-right: 10px;background-color: #c42227;
+        color: #fff;
+        padding: 0 60px;
+        border-radius: 30px;}
+
+.info-right h5{
+    background: #f2f2f2;
+    padding: 40px;
+}
+.info_box {
+    width: 100%;
+    background-color: #f2f5f7;
+    padding: 30px 15px;
+    text-transform: uppercase;
+}
+.payment_total{width: 100%;}
+.card-nmbr, .form-grp-name{margin-bottom: 40px;}
+.card-nmbr input, .form-grp-name input, .contact-details input{
+    max-width: 400px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+.printControlDiv i{color:#c42227 ;}
+a{text-decoration: none;}
+footer p{color: #8d9093;}
