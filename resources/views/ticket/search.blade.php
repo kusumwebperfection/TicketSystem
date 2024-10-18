@@ -244,7 +244,7 @@
 
 
           <!-- HTML Structure for Tabs -->
-<div class="tab-content">
+
 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
     <h2><i class="fa-regular fa-credit-card"></i> Credit Card</h2>
     <p>Please enter the card information to be used for this payment. To receive an email copy of your receipt type your email address in the corresponding text box below.</p>
@@ -282,7 +282,6 @@
     </form>
 </div>
 
-</div>
 
 <!-- JavaScript for Tab Navigation and Payment Processing -->
 <script src="https://js.stripe.com/v3/"></script>
@@ -350,7 +349,10 @@ $(document).ready(function() {
                         // Redirect or show confirmation
                         // Optionally hide this tab and show another tab
                         $('#payment').removeClass('show active');
-                        $('#next-tab').addClass('show active'); // Replace with your actual next tab ID
+                        $('#payment-tab').removeClass('show active'); 
+                        $('#reciept-tab').addClass('show active'); 
+                        $('#reciept').addClass('show active'); 
+                         // Replace with your actual next tab ID
                     } else {
                         alert('Payment failed: ' + response.message);
                     }

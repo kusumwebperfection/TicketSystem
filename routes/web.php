@@ -42,3 +42,7 @@ Route::get('/payment', function () {
 })->name('payment.form');
 
 Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
+
+Route::get('/payment/success', function () {
+    return view('payment.success'); // Point to your payment view
+})->name('payment.success');
