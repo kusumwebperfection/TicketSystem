@@ -160,221 +160,210 @@
                     <div class="info-right">
                         <h3>Review Payment</h3>
                         <div class="info-box">
-                            <h5>asdfghjkl;</h5>
+                            <h5>Total:<span id="total_price_val"></span> </h5>
                             <h3>We found the following information</h3>
                         </div>
                     </div>
                 </div>
                 <div class="bottom-buttons d-flex justify-content-between">
                     <div class="buttons d-flex mt-4">
-                        <button type="submit" class="btn">Back</button>
+                        <button type="submit" class="btn" id="lookup_back_btn">Back</button>
                         <button type="submit" class="btn">Cancel</button>
                     </div>
                     <div class="button d-flex mt-4">
                         <button type="submit" class="btn payment-hsty">Payment History</button>
-                        <button type="submit" class="btn next">Next</button>
+                        <button type="submit" class="btn next" id="next_payment_info">Next</button>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="ammount" role="tabpanel" aria-labelledby="ammount-tab">
-                <h2><i class="fa-regular fa-credit-card"></i>Payment</h2>
-                <p>Please review the payment amount.</p>
-                <p>If you wish to pay only a portion of this amount, select partial payment and <br>enter the
-                    payment amount at this time.</p>
-                <div class="payment-tab d-flex justify-content-between">
-                    <div class="payment_ack">
-                        <div class="form-check mt-4">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                I acknowledge that the third party merchant processor for this payment will be Five
-                                Point Payments LLC. I acknowledge that the service fee will appear as a separate
-                                transaction on my card statement.
-                                All payments are final
-
-                            </label>
-                        </div>
-                        <div class="form-check mt-4">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
-                                You hereby acknowledge and agree that this is a payment for a judicial related
-                                charge that can in no way be disputed, charged back, refunded or recalled. Should
-                                this charge be disputed by you without authority, you acknowledge and agree that you
-                                will be subject to civil and criminal penalties, including but not limited to, jail
-                                time and fines up to $500 per instance, for civil recovery of all fees paid, plus
-                                service fees, plus costs, plus attorney fees, plus any incidental or associated
-                                damages.
-                            </label>
-                        </div>
-                    </div>
-                    <div class="payment_total">
-                        <div class="info_box">
-                            <hr>
-                            <br>
-                            <hr>
-                            <p>Payment Amount</p>
-                            <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Pay in full
-                                </label>
-                            </div>
-                            <div class="form-check mt-4">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Partial Payment
-                                </label>
-                            </div>
-                            <input type="text">
-                            <hr>
-                            <br>
-                            <hr>
-                            <p>Service Fee</p>
-                            <p>Total</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bottom-buttons d-flex justify-content-between">
-                    <div class="buttons d-flex mt-4">
-                        <button type="submit" class="btn">Clear</button>
-                        <button type="submit" class="btn">Cancel</button>
-                    </div>
-                    <div class="button-next d-flex mt-4">
-                        <button type="submit" class="btn">Continue Payment</button>
-                    </div>
-                </div>
+    <h2><i class="fa-regular fa-credit-card"></i>Payment</h2>
+    <p>Please review the payment amount.</p>
+    <p>If you wish to pay only a portion of this amount, select partial payment and <br>enter the payment amount at this time.</p>
+    
+    <div class="payment-tab d-flex justify-content-between">
+        <div class="payment_ack">
+            <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" value="" id="acknowledgeCheck">
+                <label class="form-check-label" for="acknowledgeCheck">
+                    I acknowledge that the third-party merchant processor for this payment will be Five Point Payments LLC. 
+                    I acknowledge that the service fee will appear as a separate transaction on my card statement. All payments are final.
+                </label>
             </div>
+            <div class="form-check mt-4">
+                <input class="form-check-input" type="checkbox" value="" id="disputeCheck" checked>
+                <label class="form-check-label" for="disputeCheck">
+                    You hereby acknowledge and agree that this is a payment for a judicial-related charge that can in no way be disputed, charged back, refunded, or recalled. Should this charge be disputed by you without authority, you acknowledge and agree that you will be subject to civil and criminal penalties, including but not limited to jail time and fines up to $500 per instance, for civil recovery of all fees paid, plus service fees, plus costs, plus attorney fees, plus any incidental or associated damages.
+                </label>
+            </div>
+        </div>
 
-            <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-                <h2><i class="fa-regular fa-credit-card"></i> Credit Card</h2>
-                <p>Please enter the card information to be used for this payment. To receive an email copy of your
-                    receipt type your email address in the corresponding text box below.</p>
-                <section id="payment_details">
-                    <table style="margin-bottom:20px;">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span id="ctl00_ContentPlaceHolder_lblCardInformationDescription"
-                                        class="instructions">Please enter the card information to be used for this
-                                        payment.</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <div class="row">
-
-
-                            <div class="card-nmbr d-flex">
-                                <div class="col-6">
-                                    <input type="text" placeholder="Card Number">
-                                </div>
-                                <div class="col-3 me-3">
-                                    <select name="ctl00$ContentPlaceHolder$expiration_month" id="expiration_month"
-                                        onchange="SetMonthSelection()" data-styled="skip"
-                                        class="qa-step4-month placeholderTextboxStep4">
-                                        <option value="">M</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </select>
-                                </div>
-                                <div class="col-3">
-                                    <select name="ctl00$ContentPlaceHolder$expiration_year" id="expiration_year"
-                                        onchange="SetYearSelection()" data-styled="skip" class="qa-step4-year">
-                                        <option value="0">Y</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                        <option value="2027">2027</option>
-                                        <option value="2028">2028</option>
-                                        <option value="2029">2029</option>
-                                        <option value="2030">2030</option>
-                                        <option value="2031">2031</option>
-                                        <option value="2032">2032</option>
-                                        <option value="2033">2033</option>
-                                        <option value="2034">2034</option>
-                                        <option value="2035">2035</option>
-                                        <option value="2036">2036</option>
-                                        <option value="2037">2037</option>
-                                        <option value="2038">2038</option>
-                                        <option value="2039">2039</option>
-                                        <option value="2040">2040</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-grp-name d-flex">
-                                <div class="col-6">
-                                    <input type="text" placeholder="Name on Card">
-                                </div>
-                                <div class="col-3 me-3">
-                                    <select name="ctl00$ContentPlaceHolder$rcbCreditCardType" id="rcbCreditCardType"
-                                        onchange="SetTypeSelection()" data-styled="skip"
-                                        class="qa-step4-type placeholderTextboxStep4">
-                                        <option value="">Card Type</option>
-                                        <option value="Amex">Amex</option>
-                                        <option value="Discover">Discover</option>
-                                        <option value="MasterCard">MasterCard</option>
-                                        <option value="Visa">Visa</option>
-                                    </select>
-                                </div>
-                                <div class=" col-3 form_group_cvv">
-                                    <input type="text" placeholder="CVV">
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="contact-details d-flex">
-                            <div class="me-3">
-                                <input type="text" placeholder="Billing Zip">
-                            </div>
-                            <div class="me-3">
-                                <input type="text" placeholder="Email" class="me-3">
-                            </div>
-                            <div class="me-3">
-                                <input type="text" placeholder="phone">
-                            </div>
-
-                        </div>
-
-
-
-                </section>
+        <div class="payment_total">
+            <div class="info_box">
+                <hr>
+                <br>
+                <hr>
+                <p>Payment Amount</p>
+                
+                <!-- Radio Button for Pay in Full -->
                 <div class="form-check mt-4">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        Agree to Terms
-                    </label>
+                    <input class="form-check-input" type="radio" name="payment_option" value="full" id="payInFull" checked>
+                    <label class="form-check-label" for="payInFull">Pay in Full</label>
                 </div>
-                <div class="bottom-buttons d-flex justify-content-between">
-                    <div class="buttons d-flex mt-4">
-                        <button type="submit" class="btn">Back</button>
-                        <button type="submit" class="btn">Clear</button>
-                        <button type="submit" class="btn">Cancel</button>
-                    </div>
-                    <div class="button d-flex mt-4">
-                        <button type="submit" class="btn payment-hsty">Submit Payment</button>
-                    </div>
+
+                <!-- Radio Button for Partial Payment -->
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="radio" name="payment_option" value="partial" id="partialPayment">
+                    <label class="form-check-label" for="partialPayment">Partial Payment</label>
                 </div>
+
+                <!-- Input field for Partial Payment -->
+                <div id="partialPaymentInput" class="mt-2" style="display: none;">
+                    <input type="text" placeholder="Enter partial payment amount" class="form-control">
+                </div>
+
+                <hr>
+                <br>
+                <hr>
+                <p>Service Fee</p>
+                <p>Total</p>
             </div>
+        </div>
+    </div>
+
+    <div class="bottom-buttons d-flex justify-content-between">
+        <div class="buttons d-flex mt-4">
+            <button type="button" class="btn" id="clearBtn">Clear</button>
+            <button type="button" class="btn" id="cancelBtn">Cancel</button>
+        </div>
+        <div class="button-next d-flex mt-4">
+            <button type="button" class="continue_payment_btn" id="continuePaymentBtn">Continue Payment</button>
+        </div>
+    </div>
+</div>
+
+
+          <!-- HTML Structure for Tabs -->
+<div class="tab-content">
+<div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+    <h2><i class="fa-regular fa-credit-card"></i> Credit Card</h2>
+    <p>Please enter the card information to be used for this payment. To receive an email copy of your receipt type your email address in the corresponding text box below.</p>
+    
+    <form id="payment-form">
+        <div id="card-element"><!-- A Stripe Element will be inserted here. --></div>
+        <div id="card-errors" role="alert"></div>
+        <div class="contact-details d-flex">
+            <div class="me-3">
+                <input type="text" placeholder="Billing Zip" id="billing_zip">
+            </div>
+            <div class="me-3">
+                <input type="text" placeholder="Email" id="email">
+            </div>
+            <div class="me-3">
+                <input type="text" placeholder="Phone" id="phone">
+            </div>
+        </div>
+        <div class="form-check mt-4">
+            <input class="form-check-input" type="checkbox" value="" id="agreeToTerms">
+            <label class="form-check-label" for="agreeToTerms">
+                Agree to Terms
+            </label>
+        </div>
+        <div class="bottom-buttons d-flex justify-content-between">
+            <div class="buttons d-flex mt-4">
+                <button type="button" class="btn" id="backButton">Back</button>
+                <button type="button" class="btn" id="clearButton">Clear</button>
+                <button type="button" class="btn" id="cancelButton">Cancel</button>
+            </div>
+            <div class="button d-flex mt-4">
+                <button type="submit" class="btn payment-hsty" id="submitPayment">Submit Payment</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</div>
+
+<!-- JavaScript for Tab Navigation and Payment Processing -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+$(document).ready(function() {
+    // Initialize Stripe
+    const stripe = Stripe('pk_test_51OZ7C0SJ3O9KIwQxB61lqe21YTrpypU192hFMYVCdCklOZictUprquAgUTzW47iOr2GlohS4YY4rcdnGGIVIZdNS00SnCqeCnc'); // Replace with your public Stripe key
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element'); // Ensure you have this div in your payment tab
+
+    // Handle tab navigation
+    $('.continue_payment_btn').click(function() {
+        if ($('#acknowledgeCheck').is(':checked')) {
+            $('#ammount').removeClass('show active');
+            $('#payment').addClass('show active');
+        } else {
+            alert('You must acknowledge the terms to continue.');
+        }
+    });
+
+    $('.back_btn').click(function() {
+        $('#payment').removeClass('show active');
+        $('#ammount').addClass('show active');
+    });
+
+    // Handle Submit Payment button click
+    $('.payment-hsty').click(async function(e) {
+        e.preventDefault();
+
+        if (!$('#agreeToTerms').is(':checked')) {
+            alert('You must agree to the terms to continue.');
+            return; // Stop execution if terms are not agreed to
+        }
+
+        // Create a payment method with Stripe
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+        });
+
+        if (error) {
+            // Display error.message in your UI.
+            document.getElementById('card-errors').textContent = error.message;
+        } else {
+            // Gather additional input data
+            const billingZip = $('#billing_zip').val();
+            const email = $('#email').val();
+            const phone = $('#phone').val();
+
+            // Submit the payment method to your server
+            $.ajax({
+                type: 'POST',
+                url: '{{ route("payment.process") }}', // Update this route according to your setup
+                data: {
+                    payment_method_id: paymentMethod.id,
+                    billing_zip: billingZip,
+                    email: email,
+                    phone: phone,
+                    _token: '{{ csrf_token() }}' // CSRF token for security
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        // Redirect or show confirmation
+                        // Optionally hide this tab and show another tab
+                        $('#payment').removeClass('show active');
+                        $('#next-tab').addClass('show active'); // Replace with your actual next tab ID
+                    } else {
+                        alert('Payment failed: ' + response.message);
+                    }
+                },
+                error: function() {
+                    alert('An error occurred while processing your payment. Please try again.');
+                }
+            });
+        }
+    });
+});
+</script>
+
 
             <div class="tab-pane fade" id="reciept" role="tabpanel" aria-labelledby="reciept-tab">
                 <h2><i class="fa-solid fa-file-invoice"></i> Receipt</h2>

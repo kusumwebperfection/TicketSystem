@@ -66,40 +66,116 @@
 
             // AJAX request
             $.ajax({
-                type: 'POST',
-                url: '{{  route("ticket.search") }}',
-                data: formData,
-                success: function(response) {
-                    // Assume response contains first_name, last_name, price
-                    var price = parseFloat(response.price);
-                    var totalPrice = price * 1.10; // Add 10%
-                    
-                    // Fill the response into the info tab
-                    $('#step2Name').text(response.first_name + ' ' + response.last_name); // Full Name
-                   // $('#ctl00_ContentPlaceHolder_step2NumberLabel1').text('Price:');
-                   // $('#ctl00_ContentPlaceHolder_step2Number1').text(`$${price.toFixed(2)}`); // Price
-                    $('#ctl00_ContentPlaceHolder_step2NumberLabel2').text('Total Amount (including 10%):');
-                    $('#ctl00_ContentPlaceHolder_step2Number2').text(`$${totalPrice.toFixed(2)}`); // Total Amount
-                    
-                    // Hide look-up tab and show info tab
-                    $('#look-up').removeClass('show active'); // Hide look-up tab content
-                    $('#info').addClass('show active'); // Show info tab content
-                    $('#look-up-tab').removeClass('active'); // Remove active class from look-up tab
-                    $('#info-tab').addClass('active'); // Add active class to info tab
+    type: 'POST',
+    url: '{{ route("ticket.search") }}',
+    data: formData,
+    success: function(response) {
 
-                    // Show the amount tab if everything is okay
-                   // $('#ammount').removeClass('fade').addClass('show active'); // Show amount tab
-                   // $('#ammount-tab').addClass('active'); // Add active class to amount tab
+        // Check if there are tickets in the response
+        if (response.tickets && response.tickets.length > 0) {
+            let fullNameText = '';
+            let selectOptions = '';
 
-                    // Optionally, you can include logic to confirm if the user is okay with the total price
-                },
-                error: function(xhr) {
-                    // Handle error response
-                    $('#searchResults').html('<div class="alert alert-danger">An error occurred. Please try again.</div>');
+            // Loop through the tickets to build options and names
+            response.tickets.forEach(function(ticket, index) {
+                // Add the option for the citation number, mark the first one as selected
+                selectOptions += `<option value="${ticket.citation_number}" data-firstname="${ticket.firstname}" data-lastname="${ticket.lastname}" data-price="${ticket.Price}" ${index === 0 ? 'selected' : ''}>
+                                    ${ticket.citation_number}
+                                  </option>`;
+
+                // Only show the first ticket's details by default
+                if (index === 0) {
+                    fullNameText = `${ticket.firstname} ${ticket.lastname}`;
+                    let price = parseFloat(ticket.Price);
+                    let totalPrice = price * 1.10; // Add 10%
+
+                    // Populate name and total details
+                    $('#step2Name').text(fullNameText); // Full Name
+                    $('#total_price_val').text(`$${totalPrice.toFixed(2)}`); // Total Amount
                 }
             });
+
+            // Populate the <select> with citation numbers
+            $('#multipleInfoPayment2').html(selectOptions);
+
+            // Change event for citation number selection
+            $('#multipleInfoPayment2').change(function() {
+                // Get selected option
+                let selectedOption = $(this).find('option:selected');
+
+                // Retrieve associated data attributes
+                let firstname = selectedOption.data('firstname');
+                let lastname = selectedOption.data('lastname');
+                let price = parseFloat(selectedOption.data('price'));
+                let totalPrice = price * 1.10; // Add 10%
+
+                // Update name and total amount in the UI
+                $('#step2Name').text(`${firstname} ${lastname}`); // Update Full Name
+                $('#total_price_val').text(`$${totalPrice.toFixed(2)}`); // Update Total Amount
+            });
+        } else {
+            $('#searchResults').html('<div class="alert alert-info">No tickets found.</div>');
+        }
+
+        $('#look-up').removeClass('active'); // Hide look-up tab content
+        $('#info').addClass('show active'); // Show info tab content
+        $('#look-up-tab').removeClass('active'); // Remove active class from look-up tab
+        $('#info-tab').addClass('show active'); // Add active class to info tab
+        $('#lookup_back_btn').click(
+            function(){
+                $('#look-up').addClass('show active');
+                $('#info').removeClass('active');
+                $('#look-up-tab').addClass('show active');
+                $('#info-tab').removeClass('active');
+            });
+
+        $('#next_payment_info').click(
+            function(){
+                $('#info').removeClass('active');
+                $('#ammount-tab').addClass('show active');
+                $('#info-tab').removeClass('active');
+                $('#ammount').addClass('show active');
+            });
+    },
+    error: function(xhr) {
+        // Handle error response
+        $('#searchResults').html('<div class="alert alert-danger">An error occurred. Please try again.</div>');
+    }
+});
+
+
         });
     });
+
+    $('input[name="payment_option"]').change(function() {
+        if ($(this).val() === 'partial') {
+            $('#partialPaymentInput').show(); // Show input for partial payment
+        } else {
+            $('#partialPaymentInput').hide(); // Hide input if full payment is selected
+        }
+    });
+
+    // Check if the acknowledgment checkbox is checked when clicking continue
+    $('#continuePaymentBtn').click(function() {
+        if ($('#acknowledgeCheck').is(':checked')) {
+            // Proceed with continuing payment
+            alert('Proceeding to the next step...');
+
+            // Optionally hide this tab and show another tab
+            // For example, show a "Confirmation" tab (add your logic here)
+            $('#ammount-tab').removeClass('show active'); // Hide the current tab
+            $('#payment-tab').addClass('show active'); // Show the next tab (replace with your actual next tab ID)
+            $('#ammount').removeClass('active');
+            $('#payment').addClass('show active');
+        
+        } else {
+            alert('You must acknowledge the terms to continue.');
+        }
+    });
+
+    // Optionally trigger the change event on page load to set the initial state
+    $('input[name="payment_option"]:checked').trigger('change');
+
 </script>
 
 

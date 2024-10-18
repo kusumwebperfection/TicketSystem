@@ -129,46 +129,57 @@ class userTicketController extends Controller
     }
 
     public function search(Request $request)
-    {
-        print_r($request);
-        // Validate the incoming request
-        $request->validate([
-            'citation_number' => 'nullable|string',
-            'first_name' => 'nullable|string',
-            'last_name' => 'nullable|string',
-            'license_plate' => 'nullable|string',
-        ]);
-         
-    
-        // Fetch inputs
-        $citationNumber = $request->input('citation_number');
-        $firstName = $request->input('first_name');
-        $lastName = $request->input('last_name');
-        $licensePlate = $request->input('license_plate');
+{
+    // Validate the incoming request
+    $request->validate([
+        'citation_number' => 'nullable|string',
+        'first_name' => 'nullable|string',
+        'last_name' => 'nullable|string',
+        'license_plate' => 'nullable|string',
+    ]);
 
-        // Build the query
-        $query = Ticket::query(); // Assuming Ticket is your model
+    // Fetch inputs
+    $citationNumber = $request->input('citation_number');
+    $firstName = $request->input('first_name');
+    $lastName = $request->input('last_name');
+    $licensePlate = $request->input('license_plate');
 
-        if ($citationNumber) {
-            $query->where('citation_number', $citationNumber);
-        }
-
-        if ($firstName && $lastName) {
-            $query->where('firstname', $firstName)
-                  ->where('lastname', $lastName);
-        }
-
-        if ($licensePlate) {
-            $query->where('license_plate_number', $licensePlate);
-        }
-
-        // Execute the query
-        $tickets = $query->get();
-
-        // Return JSON response
+    // Ensure at least one input is provided
+    if (empty($citationNumber) && empty($firstName) && empty($lastName) && empty($licensePlate)) {
         return response()->json([
-            'tickets' => $tickets,
-            'message' => $tickets->isEmpty() ? 'No tickets found.' : 'Tickets retrieved successfully.'
-        ]);
+            'tickets' => [],
+            'message' => 'Please provide at least one search parameter.'
+        ], 400);
     }
+
+    // Build the query using LIKE for partial matching
+    $query = Ticket::query();
+
+    if ($citationNumber) {
+        $query->orWhere('citation_number', 'like', "%{$citationNumber}%");
+    }
+    if ($firstName) {
+        $query->orWhere('firstname', 'like', "%{$firstName}%");
+    }
+    if ($lastName) {
+        $query->orWhere('lastname', 'like', "%{$lastName}%");
+    }
+    if ($licensePlate) {
+        $query->orWhere('license_plate_number', 'like', "%{$licensePlate}%");
+    }
+
+    // Execute the query
+    $tickets = $query->get();
+
+    // Return JSON response
+    return response()->json([
+        'tickets' => $tickets,
+        'message' => $tickets->isEmpty() ? 'No tickets found.' : 'Tickets retrieved successfully.'
+    ]);
+}
+
+    
+
+    
+
 }

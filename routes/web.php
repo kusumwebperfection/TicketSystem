@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\userTicketController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Auth;
  
 /*
@@ -36,3 +37,8 @@ Route::middleware(['auth', 'role:admin,sub_admin'])->group(function () {
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     Route::resource('ticket', UserTicketController::class);
 });
+Route::get('/payment', function () {
+    return view('payment'); // Point to your payment view
+})->name('payment.form');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::post('/payment/process', [PaymentController::class, 'processPayment'])->name('payment.process');
