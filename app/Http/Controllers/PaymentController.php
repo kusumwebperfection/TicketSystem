@@ -16,39 +16,50 @@ class PaymentController extends Controller
             'billing_zip' => 'required|string',
             'email' => 'required|email',
             'phone' => 'required|string',
-            'payment_method_id' => 'required|string', // Add this validation
+            'payment_method_id' => 'required|string',
         ]);
-    
+        
         Stripe::setApiKey(env('STRIPE_SECRET'));
-    
+        
         try {
             // Create a PaymentIntent
             $paymentIntent = PaymentIntent::create([
                 'amount' => 1099, // Amount in cents (e.g., $10.99)
                 'currency' => 'usd',
-                'payment_method' => $request->payment_method_id, // Use the payment method ID from Stripe
-                'confirmation_method' => 'automatic', // You can use 'automatic' here
-                'confirm' => true, // Confirm the payment
-                'return_url' => route('payment.success'), // URL to redirect to after payment
+                'payment_method' => $request->payment_method_id,
+                'confirmation_method' => 'automatic',
+                'confirm' => true,
+                'return_url' => route('payment.success'),
             ]);
+            
+            // Log the PaymentIntent ID for debugging or records
+            Log::info('PaymentIntent created:', ['id' => $paymentIntent->id]);
     
-            return response()->json(['success' => true, 'message' => 'Payment successful!']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment successful!',
+                'transaction_id' => $paymentIntent->id, // Include transaction ID in the response
+            ]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
     
-
-    public function success()
+    
+    public function success(Request $request)
     {
+        // Assuming you are storing the transaction ID in the session
+        $transactionId = $request->session()->get('transaction_id', 'N/A');
+    
         return view('payment.success', [
             'message' => 'Thank you for your payment!',
             'details' => [
-                'amount' => '10.99', // Replace with actual payment amount or fetch from session or database
+                'amount' => '10.99', // Replace with actual payment amount
                 'currency' => 'USD',
-                'transaction_id' => '12345ABCDE' // Replace with actual transaction ID if available
+                'transaction_id' => $transactionId, // Use the transaction ID from the session
             ],
         ]);
     }
+    
     
 }
